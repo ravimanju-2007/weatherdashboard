@@ -3,50 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Responsive Weather Dashboard</title>
+    <title>Hybrid Weather Dashboard</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
     <div id="loading" class="spinner-container">
         <div class="spinner"></div>
     </div>
 
-    <div class="dashboard-container">
-        <header class="dashboard-header">
-            <h1 id="location-title">Weather Dashboard</h1>
-            <div class="search-box">
-                <input type="text" id="city-search" placeholder="Search for a city..." autocomplete="off">
-                <div id="search-suggestions" class="suggestions-list"></div>
-            </div>
-        </header>
-
-        <main class="dashboard-grid">
-            <section id="current-weather" class="weather-card day-clear">
-                <h2>Current Conditions</h2>
-                <div class="current-main">
-                    <span id="current-icon" class="weather-emoji">☀️</span>
-                    <span id="current-temp" class="large-temp">--°C</span>
+    <div class="dashboard-grid">
+        
+        <aside id="current-panel" class="panel left-panel day-clear">
+            <div class="panel-header">LOCAL WEATHER REPORT</div>
+            <div class="panel-body">
+                <p class="subtitle">Your Local Weather</p>
+                <h2 id="location-title" class="location-name">Loading...</h2>
+                
+                <div class="main-temp-container">
+                    <span id="current-temp" class="main-temp">--°C</span>
                 </div>
-                <p id="current-desc" class="weather-desc">Loading...</p>
-                <div class="weather-details">
+
+                <div class="weather-condition">
+                    <span id="current-icon" class="condition-icon">☀️</span>
+                    <p id="current-desc" class="condition-text">Clear Sky</p>
+                </div>
+
+                <div class="weather-stats">
                     <div>Humidity: <span id="humidity">--</span>%</div>
-                    <div>Wind Speed: <span id="wind-speed">--</span> km/h</div>
+                    <div>Wind: <span id="wind-speed">--</span> km/h</div>
                 </div>
-            </section>
+            </div>
+        </aside>
 
-            <section class="chart-card">
-                <h2>24-Hour Temperature Trend</h2>
+        <main class="center-panel">
+            <div class="panel chart-panel">
+                <div class="panel-header">24-HOUR TEMPERATURE TREND</div>
                 <div class="canvas-container">
                     <canvas id="tempChart"></canvas>
                 </div>
-            </section>
+            </div>
 
-            <section class="forecast-section">
-                <h2>7-Day Forecast</h2>
+            <div class="panel city-panel">
+                <div class="panel-header city-header">
+                    <span>CITY SEARCH</span>
+                    <div class="search-box">
+                        <input type="text" id="city-search" placeholder="Type city name..." autocomplete="off">
+                        <div id="search-suggestions" class="suggestions-list"></div>
+                    </div>
+                </div>
+                <div class="city-list">
+                    <div class="city-row"><span>New York</span><span class="city-temp">45°C</span></div>
+                    <div class="city-row active"><span>Los Angeles</span><span class="city-temp">35°C</span></div>
+                    <div class="city-row"><span>Houston</span><span class="city-temp">12°C</span></div>
+                    <div class="city-row"><span>Philadelphia</span><span class="city-temp">28°C</span></div>
+                </div>
+            </div>
+        </main>
+
+        <section class="right-panel">
+            <div class="panel forecast-wrapper">
+                <div class="panel-header">7-DAY FORECAST (CLICK TO EXPAND)</div>
                 <div id="forecast-grid" class="forecast-grid">
                     </div>
-            </section>
-        </main>
+            </div>
+        </section>
+
     </div>
 
     <script src="app.js"></script>
