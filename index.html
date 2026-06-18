@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Weather Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="loading" class="spinner-container">
+        <div class="spinner"></div>
+    </div>
+
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <h1 id="location-title">Weather Dashboard</h1>
+            <div class="search-box">
+                <input type="text" id="city-search" placeholder="Search for a city..." autocomplete="off">
+                <div id="search-suggestions" class="suggestions-list"></div>
+            </div>
+        </header>
+
+        <main class="dashboard-grid">
+            <section id="current-weather" class="weather-card day-clear">
+                <h2>Current Conditions</h2>
+                <div class="current-main">
+                    <span id="current-icon" class="weather-emoji">☀️</span>
+                    <span id="current-temp" class="large-temp">--°C</span>
+                </div>
+                <p id="current-desc" class="weather-desc">Loading...</p>
+                <div class="weather-details">
+                    <div>Humidity: <span id="humidity">--</span>%</div>
+                    <div>Wind Speed: <span id="wind-speed">--</span> km/h</div>
+                </div>
+            </section>
+
+            <section class="chart-card">
+                <h2>24-Hour Temperature Trend</h2>
+                <div class="canvas-container">
+                    <canvas id="tempChart"></canvas>
+                </div>
+            </section>
+
+            <section class="forecast-section">
+                <h2>7-Day Forecast</h2>
+                <div id="forecast-grid" class="forecast-grid">
+                    </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
