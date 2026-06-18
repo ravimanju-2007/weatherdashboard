@@ -3,170 +3,154 @@
     --bg-day-cloudy: linear-gradient(135deg, #757f9a, #4a569d);
     --bg-day-rain: linear-gradient(135deg, #4b6cb7, #182848);
     --bg-night: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-    --card-bg: rgba(255, 255, 255, 0.15);
-    --text-color: #ffffff;
 }
 
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 body {
-    background: #1e1e24;
-    color: var(--text-color);
+    background: #141419;
     min-height: 100vh;
-    padding: clamp(1rem, 3vw, 2rem);
-    font-size: clamp(0.9rem, 1vw + 0.5rem, 1.2rem);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: clamp(0.5rem, 2vw, 1.5rem);
+    /* Fluid scaling layout adjustments (Requirement 7) */
+    font-size: clamp(0.85rem, 0.5vw + 0.5rem, 1.1rem);
 }
 
-/* Fluid typography scaling */
-h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); }
-h2 { font-size: clamp(1.3rem, 2.5vw, 1.8rem); margin-bottom: 1rem; }
-
-/* Loading Spinner */
+/* Loading Spinner (Requirement 1) */
 .spinner-container {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.7);
+    background: rgba(0,0,0,0.8);
     display: flex; justify-content: center; align-items: center;
-    z-index: 1000;
-    opacity: 0; pointer-events: none;
+    z-index: 1000; opacity: 0; pointer-events: none;
     transition: opacity 0.3s ease;
 }
 .spinner-container.active { opacity: 1; pointer-events: all; }
 .spinner {
     width: 50px; height: 50px;
     border: 5px solid rgba(255,255,255,0.3);
-    border-top-color: #fff;
+    border-top-color: #56ccf2;
     border-radius: 50%;
     animation: spin 1s linear infinite;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* Layout Grid Setup */
-.dashboard-container {
-    max-width: 1400px;
-    margin: 0 auto;
-}
-.dashboard-header {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 2rem;
-}
-
-/* Search autocomplete box */
-.search-box { position: relative; width: 100%; max-width: 400px; }
-.search-box input {
-    width: 100%; padding: 0.8rem 1rem;
-    border: none; border-radius: 20px;
-    background: rgba(255,255,255,0.2);
-    color: white; font-size: 1rem;
-    outline: none; backdrop-filter: blur(5px);
-}
-.search-box input::placeholder { color: rgba(255,255,255,0.7); }
-.suggestions-list {
-    position: absolute; top: 110%; left: 0; width: 100%;
-    background: #2a2a35; border-radius: 8px; z-index: 10;
-    max-height: 200px; overflow-y: auto; box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-}
-.suggestion-item {
-    padding: 0.8rem 1rem; cursor: pointer; transition: background 0.2s;
-}
-.suggestion-item:hover { background: rgba(255,255,255,0.1); }
-
-/* Main Dashboard responsive layouts */
+/* Dynamic Layout Architecture (Requirement 7 - Mobile 1 Column / Desktop 3 Columns) */
 .dashboard-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 1.5rem;
+    gap: 15px;
+    width: 100%;
+    max-width: 1400px;
 }
 
-@media (min-width: 900px) {
+@media (min-width: 992px) {
     .dashboard-grid {
-        grid-template-columns: 1fr 2fr;
-    }
-    .forecast-section {
-        grid-column: span 2;
+        grid-template-columns: 1.1fr 1.6fr 1.3fr;
     }
 }
 
-/* Gradient Themes based on weather and time */
+/* Panel Structure Styling */
+.panel {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 6px;
+    color: white;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.panel-header {
+    background: rgba(0, 25, 50, 0.6);
+    padding: 12px;
+    font-size: clamp(0.75rem, 1vw, 0.9rem);
+    font-weight: bold;
+    letter-spacing: 1px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.panel-body { padding: 20px; }
+.subtitle { font-size: 0.85rem; opacity: 0.8; margin-bottom: 4px; }
+.location-name { font-size: clamp(1.1rem, 2vw, 1.5rem); margin-bottom: 15px; }
+
+/* Dynamic Background Gradients (Requirement 3) */
 .day-clear { background: var(--bg-day-clear); }
 .day-cloudy { background: var(--bg-day-cloudy); }
 .day-rain { background: var(--bg-day-rain); }
 .night { background: var(--bg-night); }
 
-.weather-card, .chart-card {
-    backdrop-filter: blur(10px);
-    border-radius: 16px;
-    padding: 1.5rem;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
-    border: 1px solid rgba(255,255,255,0.1);
-}
+.main-temp { font-size: clamp(3.5rem, 5vw, 5rem); font-weight: bold; }
+.condition-icon { font-size: 4rem; display: block; margin: 10px 0; }
+.weather-stats { margin-top: 20px; font-size: 0.95rem; line-height: 1.6; opacity: 0.9; }
 
-.current-main { display: flex; align-items: center; gap: 1rem; }
-.weather-emoji { font-size: 3.5rem; }
-.large-temp { font-size: 3rem; font-weight: bold; }
-.weather-desc { font-weight: 500; margin: 0.5rem 0; }
-.weather-details { display: flex; gap: 1rem; margin-top: 1rem; opacity: 0.9; }
-
-/* Chart Styling */
-.chart-card { background: rgba(30, 30, 36, 0.7); width: 100%; min-height: 300px; }
-.canvas-container { position: relative; width: 100%; height: 100%; }
+/* Center Layout Elements */
+.center-panel { display: flex; flex-direction: column; gap: 15px; }
+.chart-panel { background: rgba(20, 20, 25, 0.8); padding-bottom: 15px; }
+.canvas-container { position: relative; width: 100%; height: 200px; padding: 10px; }
 canvas { width: 100% !important; height: 100% !important; }
 
-/* 7-Day Forecast Grid & Accordion logic */
-.forecast-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
+/* City Panel & Search Box Setup (Requirement 6) */
+.city-panel { background: rgba(30, 40, 55, 0.6); flex-grow: 1; }
+.city-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+.search-box { position: relative; width: 100%; max-width: 220px; }
+.search-box input {
+    width: 100%; padding: 6px 12px; border: none; border-radius: 4px;
+    background: rgba(255,255,255,0.2); color: white; outline: none;
 }
-@media (min-width: 600px) {
-    .forecast-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+.search-box input::placeholder { color: rgba(255,255,255,0.6); }
+.suggestions-list {
+    position: absolute; top: 110%; left: 0; width: 100%;
+    background: #1f2937; border-radius: 4px; z-index: 10;
+    max-height: 150px; overflow-y: auto;
 }
+.suggestion-item { padding: 8px 12px; cursor: pointer; font-size: 0.85rem; }
+.suggestion-item:hover { background: rgba(255,255,255,0.1); }
+
+.city-list { display: flex; flex-direction: column; }
+.city-row { display: flex; justify-content: space-between; padding: 10px 15px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.city-row.active { background: rgba(0,0,0,0.25); color: #ffeb3b; font-weight: bold; }
+
+/* 7-Day Accordion Grid Setup (Requirement 4) */
+.forecast-wrapper { background: rgba(255, 255, 255, 0.05); height: 100%; }
+.forecast-grid { display: flex; flex-direction: column; gap: 1px; background: rgba(255,255,255,0.1); }
 
 .forecast-card {
-    background: rgba(255,255,255,0.08);
-    border-radius: 12px;
-    padding: 1rem;
-    text-align: center;
+    background: rgba(30, 35, 45, 0.7);
+    padding: 12px 15px;
     cursor: pointer;
     overflow: hidden;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    max-height: 160px;
-    border: 1px solid rgba(255,255,255,0.05);
+    max-height: 50px;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.forecast-card:hover { transform: translateY(-4px); background: rgba(255,255,255,0.15); }
-
-/* Expanded panel transition state */
+.forecast-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 .forecast-card.expanded {
-    grid-column: 1 / -1;
-    max-height: 500px;
-    text-align: left;
-    background: rgba(255,255,255,0.12);
+    max-height: 150px;
+    background: rgba(45, 55, 75, 0.9);
 }
 
 .hourly-container {
-    margin-top: 1rem;
+    margin-top: 12px;
     display: flex;
-    gap: 1rem;
+    gap: 8px;
     overflow-x: auto;
-    padding-bottom: 0.5rem;
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: all 0.3s ease;
+    padding-bottom: 5px;
 }
-.forecast-card.expanded .hourly-container { opacity: 1; transform: translateY(0); }
 .hourly-item {
     background: rgba(0,0,0,0.2);
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
+    padding: 6px;
+    border-radius: 4px;
     text-align: center;
-    min-width: 75px;
+    min-width: 60px;
+    font-size: 0.75rem;
 }
